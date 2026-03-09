@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class SealBreath : MonoBehaviour
 {
     [Header("Breath Settings")]
+    public Slider breathSlider;
     public float maxBreath = 10f;
     public float drainRate = 1f;
     public float sprintDrainRate = 1f;
@@ -32,7 +34,9 @@ public class SealBreath : MonoBehaviour
     {
         currentBreath = maxBreath;
         movement = GetComponent<SealMovement>();
-        Debug.Log("Breath system initialized. Breath = " + currentBreath);
+
+        breathSlider.maxValue = maxBreath;
+        breathSlider.value = currentBreath;
     }
 
     void Update()
@@ -60,6 +64,8 @@ public class SealBreath : MonoBehaviour
 
         if (currentBreath <= 0f)
             Die();
+
+        breathSlider.value = currentBreath;
     }
     void Die()
     {

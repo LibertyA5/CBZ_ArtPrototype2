@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class SealMovement : MonoBehaviour
@@ -17,6 +18,7 @@ public class SealMovement : MonoBehaviour
     public float airDrag = 0f;
 
     [Header("Stamina")]
+    public Slider staminaSlider;
     public float maxStamina = 5f;
     public float staminaDrain = 1f;
     public float staminaRegen = 0.5f;
@@ -53,6 +55,9 @@ public class SealMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         currentStamina = maxStamina;
+
+        staminaSlider.maxValue = maxStamina;
+        staminaSlider.value = currentStamina;
     }
 
     private void Update()
@@ -103,6 +108,8 @@ public class SealMovement : MonoBehaviour
         }*/
 
         SpeedControl();
+
+        staminaSlider.value = currentStamina;
     }
     private void FixedUpdate()
     {
