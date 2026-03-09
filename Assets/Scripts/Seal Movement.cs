@@ -8,11 +8,11 @@ public class SealMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 5f;
-    //public float jumpForce = 5f;
-    //public float jumpCooldown = 0.5f;
+    public float jumpForce = 5f;
+    public float jumpCooldown = 0.5f;
     public float airMultiplier = 0.5f;
     public float sprintMultiplier = 1.8f;
-    //bool jumpHeld;
+    bool jumpHeld;
 
     public float waterDrag = 4f;
     public float airDrag = 0f;
@@ -31,13 +31,13 @@ public class SealMovement : MonoBehaviour
     public float groundCheckDistance = 0.6f; // adjust to seal height
     public Transform orientation;
 
-    //[Header("Input")]
-    //public KeyCode jumpKey = KeyCode.Space;
+    [Header("Input")]
+    public KeyCode jumpKey = KeyCode.Space;
 
     public OrcaDeviation orca;
 
     Rigidbody rb;
-    //bool readyToJump = true;
+    bool readyToJump = true;
     bool isGrounded;
     bool isInWater;
     public bool IsHidden;
@@ -89,7 +89,7 @@ public class SealMovement : MonoBehaviour
                 currentStamina = maxStamina;
         }
 
-        //jumpHeld = Input.GetKey(jumpKey) || Input.GetButton("Jump");
+        jumpHeld = Input.GetKey(jumpKey) || Input.GetButton("Jump");
 
         float height = GetComponent<Collider>().bounds.extents.y;
 
@@ -102,10 +102,10 @@ public class SealMovement : MonoBehaviour
         rb.drag = isInWater ? waterDrag : airDrag;
         rb.useGravity = true;
 
-        /*if (jumpHeld && readyToJump && isGrounded && !isInWater)
+        if (jumpHeld && readyToJump && isGrounded && !isInWater)
         {
             Jump();
-        }*/
+        }
 
         SpeedControl();
 
@@ -154,7 +154,7 @@ public class SealMovement : MonoBehaviour
             rb.AddForce(moveDirection.normalized * moveSpeed * 7f * airMultiplier * speedMultiplier, ForceMode.Force);
         }
     }
-    /*private void Jump()
+    private void Jump()
     {
         readyToJump = false;
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -163,7 +163,7 @@ public class SealMovement : MonoBehaviour
     }
 
     private void ResetJump() => readyToJump = true;
-    */
+    
     private void SpeedControl()
     {
         float speedMultiplier = isSprinting ? sprintMultiplier : 1f;
