@@ -1963,7 +1963,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c1514a81251b61b4e80be5f7cdfc4a4d, type: 2}
+  - {fileID: 2100000, guid: 200b26eb0c4f6d247acdb6de3b879983, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2196,6 +2196,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 6
+  jumpForce: 5
+  jumpCooldown: 0.5
   airMultiplier: 0.6
   sprintMultiplier: 1.8
   waterDrag: 4
@@ -2218,6 +2220,7 @@ MonoBehaviour:
     m_Bits: 512
   groundCheckDistance: 0.6
   orientation: {fileID: 1195893473}
+  jumpKey: 32
   orca: {fileID: 0}
   IsHidden: 0
   isSprinting: 0
