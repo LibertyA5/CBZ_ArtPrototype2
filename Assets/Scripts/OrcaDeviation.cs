@@ -12,6 +12,13 @@ public class OrcaDeviation : MonoBehaviour
     public LayerMask whatIsGround;
     public LayerMask whatIsSeal;
 
+    [Header("Orca Sounds")]
+    public AudioSource audioSource;
+    public AudioClip patrolSound;
+    public AudioClip spotSound;
+    public AudioClip chaseStartSound;
+    public AudioClip chasingLoopSound;
+
     SealMovement sealMovement;
     NavMeshAgent agent;
     Orca patrol;
@@ -19,11 +26,14 @@ public class OrcaDeviation : MonoBehaviour
     public bool chasing;
     bool searching;
     float searchTimer;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         patrol = GetComponent<Orca>();
         sealMovement = seal.GetComponent<SealMovement>();
+
+        PlayPatrolSound();
     }
     void Update()
     {
@@ -52,6 +62,7 @@ public class OrcaDeviation : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, rot, 5f * Time.deltaTime);
             }
         }
+
         if (searching)
         {
             searchTimer -= Time.deltaTime;
@@ -61,6 +72,8 @@ public class OrcaDeviation : MonoBehaviour
                 searching = false;
                 patrol.enabled = true;
                 agent.enabled = true;
+
+                PlayPatrolSound();
             }
         }
     }
@@ -71,12 +84,45 @@ public class OrcaDeviation : MonoBehaviour
         chasing = true;
         patrol.enabled = false;
         agent.enabled = false;
+
+        StartCoroutine(PlaySpotThenChase());
     }
     void StopChase()
     {
         chasing = false;
         searching = true;
         searchTimer = lingerTime;
+    }
+    IEnumerator PlaySpotThenChase()
+    {
+        audioSource.loop = false;
+        audioSource.pitch = Random.Range(0.95f, 1.05f);
+
+        audioSource.clip = spotSound;
+        audioSource.Play();
+
+        yield return new WaitForSeconds(spotSound.length);
+
+        audioSource.clip = chaseStartSound;
+        audioSource.Play();
+
+        yield return new WaitForSeconds(chaseStartSound.length);
+
+        PlayChasingLoop();
+    }
+    void PlayPatrolSound()
+    {
+        audioSource.pitch = Random.Range(0.95f, 1.05f);
+        audioSource.clip = patrolSound;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+    void PlayChasingLoop()
+    {
+        audioSource.pitch = Random.Range(0.95f, 1.05f);
+        audioSource.clip = chasingLoopSound;
+        audioSource.loop = true;
+        audioSource.Play();
     }
     void OnTriggerEnter(Collider other)
     {
