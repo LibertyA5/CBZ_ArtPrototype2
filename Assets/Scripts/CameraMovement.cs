@@ -12,7 +12,7 @@ public class CameraMovement : MonoBehaviour
     float xRotation;
     float yRotation;
 
-    float controllerDeadzone = 0.2f;
+    float controllerDeadzone = 0.1f;
 
     private void Start()
     {
@@ -22,8 +22,8 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        float mouseX = Input.GetAxisRaw("Mouse X");
+        float mouseY = Input.GetAxisRaw("Mouse Y");
 
         float controllerX = Input.GetAxis("ControllerLookX");
         float controllerY = Input.GetAxis("ControllerLookY");
