@@ -28,14 +28,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   postExposure:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 52.6
   contrast:
     m_OverrideState: 0
     m_Value: 0
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 0.7056604, g: 0.7056604, b: 0.7056604, a: 1}
+    m_Value: {r: 1.5439953, g: 1.465339, b: 1.465339, a: 1}
   hueShift:
     m_OverrideState: 0
     m_Value: 0
