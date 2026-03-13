@@ -12,6 +12,10 @@ public class OrcaDeviation : MonoBehaviour
     public LayerMask whatIsGround;
     public LayerMask whatIsSeal;
 
+    [Header("Obstacle Avoidance")]
+    public float forwardCheckDistance = 2f;
+    public float floorCheckDistance = 1.2f;
+
     [Header("Orca Sounds")]
     public AudioSource audioSource;
     public AudioClip patrolSound;
@@ -48,11 +52,17 @@ public class OrcaDeviation : MonoBehaviour
             Vector3 dir = (seal.position - transform.position).normalized;
             RaycastHit hit;
 
-            if (Physics.Raycast(transform.position, dir, out hit, 2f, whatIsGround))
+            if (Physics.Raycast(transform.position, dir, out hit, forwardCheckDistance, whatIsGround))
             {
-                dir += hit.normal;
-                dir.Normalize();
+                // Slide along surface instead of pushing directly away
+                dir = Vector3.ProjectOnPlane(dir, hit.normal);
             }
+            if (Physics.Raycast(transform.position, Vector3.down, floorCheckDistance, whatIsGround))
+            {
+                dir += Vector3.up * 0.5f;
+            }
+
+            dir.Normalize();
 
             transform.position += dir * chaseSpeed * Time.deltaTime;
 
@@ -62,7 +72,6 @@ public class OrcaDeviation : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, rot, 5f * Time.deltaTime);
             }
         }
-
         if (searching)
         {
             searchTimer -= Time.deltaTime;
