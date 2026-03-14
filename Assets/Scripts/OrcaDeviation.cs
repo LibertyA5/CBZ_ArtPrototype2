@@ -101,6 +101,8 @@ public class OrcaDeviation : MonoBehaviour
         chasing = false;
         searching = true;
         searchTimer = lingerTime;
+
+        audioSource.Stop();
     }
     IEnumerator PlayChaseStartThenLoop()
     {
@@ -112,7 +114,10 @@ public class OrcaDeviation : MonoBehaviour
 
         yield return new WaitForSeconds(chaseStartSound.length);
 
-        PlayChasingLoop();
+        if (chasing)
+        {
+            PlayChasingLoop();
+        }
     }
     void PlayPatrolSound()
     {
